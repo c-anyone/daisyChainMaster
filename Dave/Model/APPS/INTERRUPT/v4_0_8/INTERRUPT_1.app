@@ -3,6 +3,7 @@
   <properties provideInit="true"/>
   <virtualSignals name="sr_irq" URI="http://resources/4.0.8/app/INTERRUPT/1/vs_nvic_signal_in" hwSignal="signal_in" hwResource="//@hwResources.0" visible="true">
     <upwardMapList xsi:type="ResourceModel:Connections" href="../../UART_CONFIG/v4_0_8/UART_CONFIG_1.app#//@connections.2"/>
+    <upwardMapList xsi:type="ResourceModel:Connections" href="../../UART_CONFIG/v4_0_8/UART_CONFIG_1.app#//@connections.3"/>
   </virtualSignals>
   <requiredApps URI="http://resources/4.0.8/app/INTERRUPT/1/appres_cpu" requiredAppName="CPU_CTRL_XMC4" requiringMode="SHARABLE">
     <downwardMapList xsi:type="ResourceModel:App" href="../../CPU_CTRL_XMC4/v4_0_12/CPU_CTRL_XMC4_0.app#/"/>

@@ -15,15 +15,19 @@
 uint8_t daisy_address = 0xff;
 static uint8_t framebuf[64];
 static uint8_t frameLength=0;
-static uint8_t target;
+void handleFrameReception(void);
+//static uint8_t target;
 
 /*
  * Handles the Reception of Bytes and calls the min protocol receive function
  */
 void uartReceiveIRQ() {
 	uint16_t rxData = 0;
-	rxData = XMC_UART_CH_GetReceivedData(UART_DAISY.channel);
-	min_rx_byte((uint8_t) rxData & 0xff);
+	while(!XMC_USIC_CH_RXFIFO_IsEmpty(UART_DAISY.channel)) {
+		rxData = XMC_UART_CH_GetReceivedData(UART_DAISY.channel);
+		//	rxData = XMC_USIC_CH_RXFIFO_GetData(UART_DAISY.channel);
+		min_rx_byte((uint8_t) rxData & 0xff);
+	}
 }
 
 /*
@@ -35,7 +39,8 @@ void min_tx_byte(uint8_t byte) {
 }
 
 /*
- * for now only a stub, should return the free space in the transmit buffer
+ * for now only a stub, should
+ *  return the free space in the transmit buffer
  */
 uint8_t min_tx_space(void) {
 	return 0xff;
@@ -52,6 +57,7 @@ void min_frame_received(uint8_t buf[], uint8_t len, uint8_t address) {
 	switch(address) {
 
 	case DAISY_BROADCAST:			//broadcast, retransmit and ignore for now
+		handleFrameReception();
 		min_tx_frame(address,framebuf,len);
 		break;
 	case DAISY_RECEIVE_ADDR:			//set address to new counter
@@ -70,6 +76,6 @@ void handleFrameReception(void) {
 	USBD_VCOM_SendData((int8_t*)framebuf,frameLength);
 }
 
-void updateAddress() {
-
+void updateAddress(uint8_t newAddress) {
+	daisy_address = newAddress;
 }

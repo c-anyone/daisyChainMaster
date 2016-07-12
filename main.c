@@ -28,6 +28,7 @@ int8_t TxBuffer[BUF_SIZE] = { 0 };
 uint8_t Bytes;
 
 static void usbCallback(void);
+daisyRxCallback_t receiveCallback(uint8_t length,uint8_t *buf);
 
 void sendPing() {
 	DIGITAL_IO_ToggleOutput(&LED1);
@@ -67,13 +68,18 @@ int main(void)
 	     }
 	   }
 
-	   XMC_UART_CH_Start(UART_DAISY.channel);
+	daisyInit(&UART_DAISY);		// init the daisy chain layer and start uart
+	daisySetRxCallback(receiveCallback);	// set the receive callback function
 
 	while (1U)
 	{
 		CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
 	}
 	return 1;
+}
+
+daisyRxCallback_t receiveCallback(uint8_t length,uint8_t *buf) {
+	USBD_VCOM_SendData((int8_t*)buf,length);
 }
 
 void usbCallback(void) {
@@ -93,7 +99,7 @@ void usbCallback(void) {
 			++bytes;
 		}
 	//	USBD_VCOM_SendData(RxBuffer,bytes);
-		DaisyChainSendData(0xff,bytes,(uint8_t*)RxBuffer);
+		daisySendData(0xff,bytes,(uint8_t*)RxBuffer);
 		bytes = 0;
 	}
 }

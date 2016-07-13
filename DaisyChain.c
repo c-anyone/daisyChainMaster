@@ -108,10 +108,6 @@ void daisySendData(uint8_t address,uint8_t length,uint8_t* data) {
 		min_tx_frame(address,data,length);
 }
 
-void handleFrameReception(void) {
-	USBD_VCOM_SendData((int8_t*)framebuf,frameLength);
-}
-
 static void updateAddress(uint8_t newAddress) {
 	daisy_address = newAddress;
 }

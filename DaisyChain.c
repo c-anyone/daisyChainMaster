@@ -87,11 +87,12 @@ void min_frame_received(uint8_t buf[], uint8_t len, uint8_t address) {
 			break;
 		case DAISY_BROADCAST:			//broadcast, retransmit and ignore for now
 			handleFrameReception();
-			min_tx_frame(address,framebuf,len);
+//			min_tx_frame(address,framebuf,len);
 			break;
 		case DAISY_ADDR_COUNT:
 			//set address to new counter
 			updateAddress(++buf[0]);
+			rxCallback(len,buf);
 			//and retransmit with increased counter value
 			min_tx_frame(address,framebuf,len);
 			break;

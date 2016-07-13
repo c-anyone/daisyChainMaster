@@ -28,7 +28,7 @@ int8_t TxBuffer[BUF_SIZE] = { 0 };
 uint8_t Bytes;
 
 static void usbCallback(void);
-daisyRxCallback_t receiveCallback(uint8_t length,uint8_t *buf);
+void receiveCallback(uint8_t length,uint8_t *buf);
 
 void sendPing() {
 	DIGITAL_IO_ToggleOutput(&LED1);
@@ -56,17 +56,17 @@ int main(void)
 	while(!USBD_VCOM_IsEnumDone());
 
 
-	  uint32_t TimerId = SYSTIMER_CreateTimer(ONEMSEC,SYSTIMER_MODE_PERIODIC,(void*)usbCallback,NULL);
-	   if(TimerId != 0U)
-	   {
-	     // Timer is created successfully
-	     // Start/Run Software Timer
-	     uint32_t status = SYSTIMER_StartTimer(TimerId);
-	     if(status == SYSTIMER_STATUS_SUCCESS)
-	     {
-	       // Timer is running
-	     }
-	   }
+	uint32_t TimerId = SYSTIMER_CreateTimer(ONEMSEC,SYSTIMER_MODE_PERIODIC,(void*)usbCallback,NULL);
+	if(TimerId != 0U)
+	{
+		// Timer is created successfully
+		// Start/Run Software Timer
+		uint32_t status = SYSTIMER_StartTimer(TimerId);
+		if(status == SYSTIMER_STATUS_SUCCESS)
+		{
+			// Timer is running
+		}
+	}
 
 	daisyInit(&UART_DAISY);		// init the daisy chain layer and start uart
 	daisySetRxCallback(receiveCallback);	// set the receive callback function
@@ -78,28 +78,78 @@ int main(void)
 	return 1;
 }
 
-daisyRxCallback_t receiveCallback(uint8_t length,uint8_t *buf) {
+void receiveCallback(uint8_t length,uint8_t *buf) {
 	USBD_VCOM_SendData((int8_t*)buf,length);
+}
+
+typedef struct {
+	uint16_t identifier;
+	uint16_t led1;		// zero equals off
+	uint16_t led2;
+	uint16_t led3;
+} PWM_SETTINGS_t;
+
+
+
+typedef enum {
+	DAISY_NONE,
+	DAISY_AUTO_DISCOVER,
+	DAISY_PING,
+	DAISY_SET_ALL,
+	DAISY_RESET_ALL
+} DAISY_CHAIN_COMMANDS_t;
+
+void send_commands(DAISY_CHAIN_COMMANDS_t com) {
+	PWM_SETTINGS_t leds = { 0x11,0x22,0x33,0x44 };
+
+	switch(com) {
+	case DAISY_AUTO_DISCOVER:
+		daisySendData(DAISY_ADDR_COUNT,1,0);
+		break;
+	case DAISY_PING:
+		daisySendData(DAISY_BROADCAST,0,0);
+		break;
+	case DAISY_SET_ALL:
+		daisySendData(DAISY_BROADCAST,sizeof(leds),(uint8_t*) &leds);
+		break;
+	case DAISY_RESET_ALL:
+		break;
+	case DAISY_NONE:
+		return;
+	}
 }
 
 void usbCallback(void) {
 	static uint8_t bytes = 0;
 	uint8_t bytesReceived = 0;
-
+	DAISY_CHAIN_COMMANDS_t command = DAISY_NONE;
 	bytesReceived = USBD_VCOM_BytesReceived();
 
 	if(bytesReceived) {
 		while(bytes < BUF_SIZE && bytesReceived > 0) {
 			USBD_VCOM_ReceiveByte(&RxBuffer[bytes]);
-			--bytesReceived;
+			--bytesReceived; ++bytes;
 			if(RxBuffer[bytes]=='\n' || RxBuffer[bytes] == '\r') {
 				RxBuffer[bytes] = '\0';
 				break;
 			}
-			++bytes;
+
 		}
-	//	USBD_VCOM_SendData(RxBuffer,bytes);
-		daisySendData(0xff,bytes,(uint8_t*)RxBuffer);
+		if(strncmp("discover",(char*)RxBuffer,bytes)) {
+			command = DAISY_AUTO_DISCOVER;
+		} else if (strncmp("ping",(char*)RxBuffer,bytes)) {
+			command = DAISY_PING;
+		} else if (strncmp("setall",(char*)RxBuffer,bytes)) {
+			command = DAISY_SET_ALL;
+		} else if (strncmp("resetall",(char*)RxBuffer,bytes)) {
+			command = DAISY_RESET_ALL;
+		}
+
+		//		if(command != DAISY_NONE) {
+		send_commands(command);
+		//		}
+
+		//		daisySendData(RxBuffer[0],bytes-1,(uint8_t*)RxBuffer+1);
 		bytes = 0;
 	}
 }

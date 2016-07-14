@@ -39,7 +39,7 @@ static uint8_t rx_frame_state = SEARCHING_FOR_SOF;	/* State of receiver */
 //static uint16_t rx_frame_checksum;					/* Checksum received over the wire */
 static uint8_t rx_payload_bytes;					/* Length of payload received so far */
 static uint8_t rx_frame_addr;							/* ID of frame being received */
-static uint8_t rx_frame_length;						/* Length of frame */
+//static uint8_t rx_frame_length;						/* Length of frame */
 static uint8_t rx_len;							/* Control byte */
 
 void min_init_layer1(void)

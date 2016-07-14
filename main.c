@@ -110,9 +110,12 @@ void send_commands(DAISY_CHAIN_COMMANDS_t com) {
 		daisySendData(DAISY_BROADCAST,0,0);
 		break;
 	case DAISY_SET_ALL:
+		leds.led1 = leds.led2 = leds.led3 = 0;
 		daisySendData(DAISY_BROADCAST,sizeof(leds),(uint8_t*) &leds);
 		break;
 	case DAISY_RESET_ALL:
+		leds.led1 = leds.led2 = leds.led3 = 10000;
+		daisySendData(DAISY_BROADCAST,sizeof(leds),(uint8_t*) &leds);
 		break;
 	case DAISY_NONE:
 		return;
@@ -129,27 +132,26 @@ void usbCallback(void) {
 		while(bytes < BUF_SIZE && bytesReceived > 0) {
 			USBD_VCOM_ReceiveByte(&RxBuffer[bytes]);
 			--bytesReceived; ++bytes;
-			if(RxBuffer[bytes]=='\n' || RxBuffer[bytes] == '\r') {
-				RxBuffer[bytes] = '\0';
-				break;
+
+			// if the string ends in LF or CR, evaluate and act accordingly
+			if(RxBuffer[bytes-1]=='\n' || RxBuffer[bytes-1] == '\r') {
+				RxBuffer[bytes-1] = '\0';
+
+
+				if(strncmp("discover",(char*)RxBuffer,bytes) == 0) {
+					command = DAISY_AUTO_DISCOVER;
+				} else if (strncmp("ping",(char*)RxBuffer,bytes) == 0) {
+					command = DAISY_PING;
+				} else if (strncmp("setall",(char*)RxBuffer,bytes) == 0) {
+					command = DAISY_SET_ALL;
+				} else if (strncmp("resetall",(char*)RxBuffer,bytes) == 0) {
+					command = DAISY_RESET_ALL;
+				}
+				send_commands(command);
+				bytes = 0;
+				return;
 			}
-
 		}
-		if(strncmp("discover",(char*)RxBuffer,bytes)) {
-			command = DAISY_AUTO_DISCOVER;
-		} else if (strncmp("ping",(char*)RxBuffer,bytes)) {
-			command = DAISY_PING;
-		} else if (strncmp("setall",(char*)RxBuffer,bytes)) {
-			command = DAISY_SET_ALL;
-		} else if (strncmp("resetall",(char*)RxBuffer,bytes)) {
-			command = DAISY_RESET_ALL;
-		}
-
-		//		if(command != DAISY_NONE) {
-		send_commands(command);
-		//		}
-
-		//		daisySendData(RxBuffer[0],bytes-1,(uint8_t*)RxBuffer+1);
 		bytes = 0;
 	}
 }

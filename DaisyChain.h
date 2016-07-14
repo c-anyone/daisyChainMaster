@@ -2,7 +2,7 @@
  * DaisyChain.h
  *
  *  Created on: Jul 6, 2016
- *      Author: faebsn
+ *      Author: Fabio Pungg
  */
 
 #ifndef DAISYCHAIN_H_

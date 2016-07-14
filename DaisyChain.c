@@ -2,7 +2,7 @@
  * DaisyChain.c
  *
  *  Created on: Jul 6, 2016
- *      Author: faebsn
+ *      Author: Fabio Pungg
  */
 
 #include <DAVE.h>
@@ -26,7 +26,6 @@ static UART_CONFIG_t *daisyUart;
 /*
  * 	static function definitions
  */
-void handleFrameReception(void);
 static void updateAddress(uint8_t newAddress);
 
 
@@ -83,11 +82,8 @@ void min_frame_received(uint8_t buf[], uint8_t len, uint8_t address) {
 	if(address != daisy_address) {
 		switch(address) {
 		case DAISY_ERROR:				// in case of error, retransmit to master to handle
-//			min_tx_frame(address,framebuf,len);
 			break;
 		case DAISY_BROADCAST:			//broadcast, retransmit and ignore for now
-//			handleFrameReception();
-//			min_tx_frame(address,framebuf,len);
 			break;
 		case DAISY_ADDR_COUNT:
 			updateAddress(++buf[0]);					//set address to new counter
@@ -96,21 +92,14 @@ void min_frame_received(uint8_t buf[], uint8_t len, uint8_t address) {
 			break;
 		}
 	}
-//	else {
-		// call data handler callback here
 		if(rxCallback != NULL)
 			rxCallback(len,framebuf);
-//	}
 }
 
 void daisySendData(uint8_t address,uint8_t length,uint8_t* data) {
 	if(length > 0)
 		min_tx_frame(address,data,length);
 }
-
-//void handleFrameReception(void) {
-//	USBD_VCOM_SendData((int8_t*)framebuf,frameLength);
-//}
 
 static void updateAddress(uint8_t newAddress) {
 	daisy_address = newAddress;

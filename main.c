@@ -2,7 +2,7 @@
  * main.c
  *
  *  Created on: 2016 Jun 29 18:28:54
- *  Author: faebsn
+ *  Author: Fabio Pungg
  */
 
 
@@ -136,7 +136,6 @@ void usbCallback(void) {
 			// if the string ends in LF or CR, evaluate and act accordingly
 			if(RxBuffer[bytes-1]=='\n' || RxBuffer[bytes-1] == '\r') {
 				RxBuffer[bytes-1] = '\0';
-
 
 				if(strncmp("discover",(char*)RxBuffer,bytes) == 0) {
 					command = DAISY_AUTO_DISCOVER;

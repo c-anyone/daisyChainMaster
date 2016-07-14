@@ -28,7 +28,7 @@ int8_t TxBuffer[BUF_SIZE] = { 0 };
 uint8_t Bytes;
 
 static void usbCallback(void);
-void receiveCallback(uint8_t length,uint8_t *buf);
+void receiveCallback(uint8_t address,uint8_t length,uint8_t *buf);
 
 void sendPing() {
 	DIGITAL_IO_ToggleOutput(&LED1);
@@ -78,9 +78,7 @@ int main(void)
 	return 1;
 }
 
-void receiveCallback(uint8_t length,uint8_t *buf) {
-	USBD_VCOM_SendData((int8_t*)buf,length);
-}
+
 
 typedef struct {
 	uint16_t identifier;
@@ -91,6 +89,29 @@ typedef struct {
 
 
 
+void receiveCallback(uint8_t address,uint8_t length,uint8_t *buf) {
+	uint8_t cnt = 5;
+	char mesBuf[200] = {"empty"};
+	PWM_SETTINGS_t* ptr;
+	switch(address) {
+	case DAISY_ADDR_COUNT:
+		if(length>0)
+			cnt = snprintf(mesBuf,200,"Devices found: %d\n",buf[0]);
+		break;
+	case DAISY_BROADCAST:
+		if(length == sizeof(PWM_SETTINGS_t)) {
+			ptr = (PWM_SETTINGS_t*) buf;
+			cnt = snprintf(mesBuf,200,"LEDs set to %d %d %d\n",ptr->led1,ptr->led2,ptr->led3);
+		}
+		break;
+	case DAISY_ERROR:
+		cnt = snprintf(mesBuf,200,"An Error has occured\n");
+		break;
+	}
+
+	USBD_VCOM_SendData((int8_t*)mesBuf,cnt);
+}
+
 typedef enum {
 	DAISY_NONE,
 	DAISY_AUTO_DISCOVER,
@@ -98,16 +119,16 @@ typedef enum {
 	DAISY_SET_ALL,
 	DAISY_RESET_ALL
 } DAISY_CHAIN_COMMANDS_t;
-
+PWM_SETTINGS_t leds;
 void send_commands(DAISY_CHAIN_COMMANDS_t com) {
-	PWM_SETTINGS_t leds = { 0x11,0x22,0x33,0x44 };
-
+//	PWM_SETTINGS_t leds = { 0x11,0x22,0x33,0x44 };
+	uint8_t tmp = 0;
 	switch(com) {
 	case DAISY_AUTO_DISCOVER:
-		daisySendData(DAISY_ADDR_COUNT,1,0);
+		daisySendData(DAISY_ADDR_COUNT,1,&tmp);
 		break;
 	case DAISY_PING:
-		daisySendData(DAISY_BROADCAST,0,0);
+		daisySendData(DAISY_BROADCAST,0,&tmp);
 		break;
 	case DAISY_SET_ALL:
 		leds.led1 = leds.led2 = leds.led3 = 0;
@@ -126,6 +147,8 @@ void usbCallback(void) {
 	static uint8_t bytes = 0;
 	uint8_t bytesReceived = 0;
 	DAISY_CHAIN_COMMANDS_t command = DAISY_NONE;
+	char *str;
+	char *saveptr = NULL;
 	bytesReceived = USBD_VCOM_BytesReceived();
 
 	if(bytesReceived) {
@@ -136,16 +159,32 @@ void usbCallback(void) {
 			// if the string ends in LF or CR, evaluate and act accordingly
 			if(RxBuffer[bytes-1]=='\n' || RxBuffer[bytes-1] == '\r') {
 				RxBuffer[bytes-1] = '\0';
-
-				if(strncmp("discover",(char*)RxBuffer,bytes) == 0) {
-					command = DAISY_AUTO_DISCOVER;
-				} else if (strncmp("ping",(char*)RxBuffer,bytes) == 0) {
-					command = DAISY_PING;
-				} else if (strncmp("setall",(char*)RxBuffer,bytes) == 0) {
-					command = DAISY_SET_ALL;
-				} else if (strncmp("resetall",(char*)RxBuffer,bytes) == 0) {
-					command = DAISY_RESET_ALL;
+				str = strtok_r((char*) RxBuffer," ",&saveptr);
+				if(str == NULL) {
+					break;
 				}
+				if(strncmp("discover",str,bytes) == 0) {
+					command = DAISY_AUTO_DISCOVER;
+				} else if (strncmp("ping",str,bytes) == 0) {
+					command = DAISY_PING;
+				} else if (strncmp("setall",str,bytes) == 0) {
+					command = DAISY_SET_ALL;
+				} else if (strncmp("resetall",str,bytes) == 0) {
+					command = DAISY_RESET_ALL;
+				} else if (strncmp("setsingle",str,bytes) == 0) {
+					uint8_t address;
+
+					str = strtok_r(NULL," ",&saveptr);
+					address = (uint8_t)atoi(str);
+					leds.led1 = (uint16_t)atoi(strtok_r(NULL," ",&saveptr));
+					leds.led2 = (uint16_t)atoi(strtok_r(NULL," ",&saveptr));
+					leds.led3 = (uint16_t)atoi(strtok_r(NULL," ",&saveptr));
+					bytes = 0;
+					daisySendData(address,sizeof(leds),(uint8_t*) &leds);
+
+
+				}
+
 				send_commands(command);
 				bytes = 0;
 				return;

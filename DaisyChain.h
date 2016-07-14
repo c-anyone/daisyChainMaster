@@ -18,7 +18,7 @@
 #define DAISY_ERROR				(0x8fu)
 
 // typedef for data receive callback function
- typedef void (*daisyRxCallback_t)(uint8_t,uint8_t*);
+ typedef void (*daisyRxCallback_t)(uint8_t,uint8_t,uint8_t*);
 
 void daisyInit(UART_CONFIG_t *uartConfig);
 

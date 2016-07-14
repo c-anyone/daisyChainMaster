@@ -87,13 +87,11 @@ void min_frame_received(uint8_t buf[], uint8_t len, uint8_t address) {
 			break;
 		case DAISY_ADDR_COUNT:
 			updateAddress(++buf[0]);					//set address to new counter
-			rxCallback(len,buf);
-			min_tx_frame(address,framebuf,len);			//and retransmit with increased counter value
 			break;
 		}
 	}
 		if(rxCallback != NULL)
-			rxCallback(len,framebuf);
+			rxCallback(address,len,framebuf);
 }
 
 void daisySendData(uint8_t address,uint8_t length,uint8_t* data) {

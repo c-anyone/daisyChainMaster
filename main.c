@@ -9,7 +9,7 @@
 
 
 #include <DAVE.h>                 //Declarations from DAVE Code Generation (includes SFR declaration)
-#include "DaisyChain.h"
+#include "./Libraries/xmc_daisyChain/DaisyChain.h"
 /**
 
  * @brief main() - Application entry point

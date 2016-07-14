@@ -1,0 +1,3 @@
+[submodule "xmc_daisyChain"]
+	path = xmc_daisyChain
+	url = https://github.com/c-anyone/xmc_daisy_chain

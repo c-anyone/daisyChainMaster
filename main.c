@@ -9,7 +9,7 @@
 
 
 #include <DAVE.h>                 //Declarations from DAVE Code Generation (includes SFR declaration)
-#include "./Libraries/xmc_daisyChain/DaisyChain.h"
+#include "./xmc_daisyChain/DaisyChain.h"
 /**
 
  * @brief main() - Application entry point
@@ -74,6 +74,8 @@ int main(void)
 	while (1U)
 	{
 		CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
+
+
 	}
 	return 1;
 }
@@ -171,7 +173,7 @@ void usbCallback(void) {
 					command = DAISY_SET_ALL;
 				} else if (strncmp("resetall",str,bytes) == 0) {
 					command = DAISY_RESET_ALL;
-				} else if (strncmp("setsingle",str,bytes) == 0) {
+				} else if (strncmp("set",str,bytes) == 0) {
 					uint8_t address;
 
 					str = strtok_r(NULL," ",&saveptr);

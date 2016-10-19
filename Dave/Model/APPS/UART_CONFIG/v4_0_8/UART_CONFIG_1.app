@@ -17,9 +17,9 @@
   <virtualSignals name="protocol_specific_event" URI="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_proto_specfic_event" hwSignal="protocol_specific_int" hwResource="//@hwResources.0" visible="true"/>
   <virtualSignals name="fifo_standard_transmit_buffer_event" URI="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_fifo_tx_event" hwSignal="standard_transmit_buffer_int" hwResource="//@hwResources.0" visible="true"/>
   <virtualSignals name="fifo_transmit_buffer_error_event" URI="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_fifo_tx_err_event" hwSignal="transmit_buffer_error_int" hwResource="//@hwResources.0" visible="true"/>
-  <virtualSignals name="fifo_standard_receive_buffer_event" URI="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_fifo_rx_event" hwSignal="standard_receive_buffer_int" hwResource="//@hwResources.0" visible="true"/>
-  <virtualSignals name="fifo_receive_buffer_error_event" URI="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_fifo_rx_err_event" hwSignal="receive_buffer_error_int" hwResource="//@hwResources.0" visible="true"/>
-  <virtualSignals name="fifo_alternate_receive_buffer_event" URI="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_fifo_alt_rx_event" hwSignal="alternate_receive_buffer_int" hwResource="//@hwResources.0" visible="true"/>
+  <virtualSignals name="fifo_standard_receive_buffer_event" URI="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_fifo_rx_event" hwSignal="standard_receive_buffer_int" hwResource="//@hwResources.0" required="false"/>
+  <virtualSignals name="fifo_receive_buffer_error_event" URI="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_fifo_rx_err_event" hwSignal="receive_buffer_error_int" hwResource="//@hwResources.0" required="false"/>
+  <virtualSignals name="fifo_alternate_receive_buffer_event" URI="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_fifo_alt_rx_event" hwSignal="alternate_receive_buffer_int" hwResource="//@hwResources.0" required="false"/>
   <requiredApps URI="http://resources/4.0.8/app/UART_CONFIG/1/ra_clock" requiredAppName="CLOCK_XMC4" requiringMode="SHARABLE">
     <downwardMapList xsi:type="ResourceModel:App" href="../../CLOCK_XMC4/v4_0_18/CLOCK_XMC4_0.app#/"/>
   </requiredApps>
@@ -32,10 +32,6 @@
     <targetVirtualSignal href="../../DIGITAL_IO/v4_0_14/DIGITAL_IO_3.app#//@virtualSignals.1"/>
   </connections>
   <connections URI="http://resources/4.0.8/app/UART_CONFIG/1/http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_standard_rx_event/http://resources/4.0.8/app/INTERRUPT/1/vs_nvic_signal_in" sourceSignal="standard_receive_event" targetSignal="sr_irq" srcVirtualSignal="//@virtualSignals.7">
-    <downwardMapList xsi:type="ResourceModel:VirtualSignal" href="../../INTERRUPT/v4_0_8/INTERRUPT_1.app#//@virtualSignals.0"/>
-    <targetVirtualSignal href="../../INTERRUPT/v4_0_8/INTERRUPT_1.app#//@virtualSignals.0"/>
-  </connections>
-  <connections URI="http://resources/4.0.8/app/UART_CONFIG/1/http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_fifo_rx_event/http://resources/4.0.8/app/INTERRUPT/1/vs_nvic_signal_in" sourceSignal="fifo_standard_receive_buffer_event" targetSignal="sr_irq" srcVirtualSignal="//@virtualSignals.14">
     <downwardMapList xsi:type="ResourceModel:VirtualSignal" href="../../INTERRUPT/v4_0_8/INTERRUPT_1.app#//@virtualSignals.0"/>
     <targetVirtualSignal href="../../INTERRUPT/v4_0_8/INTERRUPT_1.app#//@virtualSignals.0"/>
   </connections>

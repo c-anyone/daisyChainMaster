@@ -100,7 +100,7 @@ const UART_CONFIG_CONF_t UART_DAISY_config =
   .mode = UART_CONFIG_MODE_FULLDUPLEX,
   .tx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_16WORDS,
   .tx_fifo_limit     = 0U,
-  .rx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_16WORDS,
+  .rx_fifo_size     = XMC_USIC_CH_FIFO_DISABLED,
   .rx_fifo_limit     = 0U
 };
 
@@ -124,9 +124,7 @@ void UART_DAISY_lInit()
   /* Set input source for input stage dx0 (receive pin) */
   XMC_USIC_CH_SetInputSource(XMC_UART1_CH0, (XMC_USIC_CH_INPUT_t)XMC_UART_CH_INPUT_RXD, 0U);
   /* Configure the transmit FIFO */
-  XMC_USIC_CH_TXFIFO_Configure(UART_DAISY.channel, 16U, XMC_USIC_CH_FIFO_SIZE_16WORDS, 0U);
-  /* Configure the receive FIFO */
-  XMC_USIC_CH_RXFIFO_Configure(UART_DAISY.channel, 0U, XMC_USIC_CH_FIFO_SIZE_16WORDS, 0U);
+  XMC_USIC_CH_TXFIFO_Configure(UART_DAISY.channel, 0U, XMC_USIC_CH_FIFO_SIZE_16WORDS, 0U);
   /* Set the service request line for the standard receive event */
   XMC_USIC_CH_SetInterruptNodePointer(XMC_UART1_CH0, XMC_USIC_CH_INTERRUPT_NODE_POINTER_RECEIVE, 0U);
   /* Set the service request line for the Data Lost, Baud Rate Generator and UART protocol events */

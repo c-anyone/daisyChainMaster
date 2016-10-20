@@ -61,7 +61,7 @@ int main(void) {
 		}
 	}
 */
-	uartCobsInit(&UART_DAISY);
+	uartCobsInit(UART_DAISY.channel);
 
 	while (1U) {
 

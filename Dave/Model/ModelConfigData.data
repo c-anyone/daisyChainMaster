@@ -94,11 +94,10 @@
   <hwConnections href="APPS/CPU_CTRL_XMC4/v4_0_12/CPU_CTRL_XMC4_0.app#//@connections.19"/>
   <hwConnections href="APPS/CPU_CTRL_XMC4/v4_0_12/CPU_CTRL_XMC4_0.app#//@connections.20"/>
   <hwConnections href="APPS/UART_CONFIG/v4_0_8/UART_CONFIG_1.app#//@connections.1"/>
-  <hwConnections href="APPS/UART_CONFIG/v4_0_8/UART_CONFIG_1.app#//@connections.2"/>
   <hwConnections href="APPS/DIGITAL_IO/v4_0_14/DIGITAL_IO_0.app#//@connections.2"/>
   <hwConnections href="APPS/DIGITAL_IO/v4_0_14/DIGITAL_IO_4.app#//@connections.0"/>
   <hwConnections href="APPS/DIGITAL_IO/v4_0_14/DIGITAL_IO_4.app#//@connections.1"/>
   <hwConnections href="APPS/DIGITAL_IO/v4_0_14/DIGITAL_IO_5.app#//@connections.0"/>
   <hwConnections href="APPS/DIGITAL_IO/v4_0_14/DIGITAL_IO_5.app#//@connections.1"/>
-  <hwConnections href="APPS/UART_CONFIG/v4_0_8/UART_CONFIG_1.app#//@connections.3"/>
+  <hwConnections href="APPS/UART_CONFIG/v4_0_8/UART_CONFIG_1.app#//@connections.2"/>
 </ApplicationModel:ApplicationData>

@@ -3,7 +3,7 @@
     <ResourceReserve/>
     <Solver>
         <SolverBndMap>
-            <BindMap MUri="peripheral/cpu/0/nvic/interrupt/91" Proxy="app/INTERRUPT/1/hwres_nvicnode"/>
+            <BindMap MUri="peripheral/cpu/0/nvic/interrupt/64" Proxy="app/INTERRUPT/1/hwres_nvicnode"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/pll" Proxy="app/CLOCK_XMC4/0/hwres_pll"/>
             <BindMap MUri="peripheral/cpu/0/exception/memmanage" Proxy="app/CPU_CTRL_XMC4/0/hwres_exception_memmanage"/>
             <BindMap MUri="port/p/1/pad/1" Proxy="app/DIGITAL_IO/4/hwres_port_pin"/>

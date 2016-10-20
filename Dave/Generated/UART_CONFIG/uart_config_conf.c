@@ -101,7 +101,7 @@ const UART_CONFIG_CONF_t UART_DAISY_config =
   .tx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_16WORDS,
   .tx_fifo_limit     = 0U,
   .rx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_16WORDS,
-  .rx_fifo_limit     = 12U
+  .rx_fifo_limit     = 0U
 };
 
 /* APP handle structure */
@@ -126,17 +126,13 @@ void UART_DAISY_lInit()
   /* Configure the transmit FIFO */
   XMC_USIC_CH_TXFIFO_Configure(UART_DAISY.channel, 16U, XMC_USIC_CH_FIFO_SIZE_16WORDS, 0U);
   /* Configure the receive FIFO */
-  XMC_USIC_CH_RXFIFO_Configure(UART_DAISY.channel, 0U, XMC_USIC_CH_FIFO_SIZE_16WORDS, 12U);
+  XMC_USIC_CH_RXFIFO_Configure(UART_DAISY.channel, 0U, XMC_USIC_CH_FIFO_SIZE_16WORDS, 0U);
   /* Set the service request line for the transmit buffer event */
   XMC_USIC_CH_SetInterruptNodePointer(XMC_UART1_CH0, XMC_USIC_CH_INTERRUPT_NODE_POINTER_TRANSMIT_BUFFER, 0U);
-  /* Set the service request line for the standard receive event */
-  XMC_USIC_CH_SetInterruptNodePointer(XMC_UART1_CH0, XMC_USIC_CH_INTERRUPT_NODE_POINTER_RECEIVE, 1U);
   /* Set the service request line for the Data Lost, Baud Rate Generator and UART protocol events */
-  XMC_USIC_CH_SetInterruptNodePointer(XMC_UART1_CH0, XMC_USIC_CH_INTERRUPT_NODE_POINTER_PROTOCOL, 2U);
+  XMC_USIC_CH_SetInterruptNodePointer(XMC_UART1_CH0, XMC_USIC_CH_INTERRUPT_NODE_POINTER_PROTOCOL, 1U);
   /* Enable the transmit buffer event */
   XMC_USIC_CH_EnableEvent(XMC_UART1_CH0, XMC_USIC_CH_EVENT_TRANSMIT_BUFFER);
-  /* Enable the standard receive event */
-  XMC_USIC_CH_EnableEvent(XMC_UART1_CH0, XMC_USIC_CH_EVENT_STANDARD_RECEIVE);
 }
 /* CODE_BLOCK_END */
 

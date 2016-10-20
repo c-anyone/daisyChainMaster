@@ -56,7 +56,7 @@
  * MACROS
  **********************************************************************************************************************/
 	
-#define uartReceiveIRQ IRQ_Hdlr_91
+#define uartReceiveIRQ IRQ_Hdlr_64
 		
 #define uartCobsTransmitIRQ IRQ_Hdlr_90
 		

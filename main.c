@@ -155,8 +155,8 @@ typedef struct {
  }
  */
 
-PWM_SETTINGS_t leds = { .identifier = 0xAAAA, .led1 = 0x00BB, .led1 = 0x0CC0,
-		.led1 = 0xDD00 };
+PWM_SETTINGS_t leds = { .identifier = 0x4142, .led1 = 0x4300, .led2 = 0x4400,
+		.led3 = 0x4545 };
 
 void usbCallback(void) {
 	static uint8_t bytes = 0;

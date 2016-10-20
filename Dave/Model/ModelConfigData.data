@@ -52,9 +52,6 @@
     <resource xsi:type="ResourceModel:Peripheral" href="HW_RESOURCES/USB/USB_0.dd#/"/>
   </nodes>
   <nodes xsi:type="ApplicationModel:AppNode">
-    <resource xsi:type="ResourceModel:App" href="APPS/SYSTIMER/v4_1_12/SYSTIMER_0.app#/"/>
-  </nodes>
-  <nodes xsi:type="ApplicationModel:AppNode">
     <resource xsi:type="ResourceModel:App" href="APPS/DIGITAL_IO/v4_0_14/DIGITAL_IO_4.app#/"/>
   </nodes>
   <nodes xsi:type="ApplicationModel:PortNode">
@@ -74,9 +71,7 @@
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.14" target="//@nodes.8"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.14" target="//@nodes.0"/>
   <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.15" target="//@nodes.14"/>
-  <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.17" target="//@nodes.0"/>
-  <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.17" target="//@nodes.8"/>
-  <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.22" target="//@nodes.8"/>
+  <connections xsi:type="ApplicationModel:NodeConnection" source="//@nodes.21" target="//@nodes.8"/>
   <hwConnections href="APPS/CLOCK_XMC4/v4_0_18/CLOCK_XMC4_0.app#//@connections.0"/>
   <hwConnections href="APPS/CLOCK_XMC4/v4_0_18/CLOCK_XMC4_0.app#//@connections.5"/>
   <hwConnections href="APPS/CLOCK_XMC4/v4_0_18/CLOCK_XMC4_0.app#//@connections.6"/>

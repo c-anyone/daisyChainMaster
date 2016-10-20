@@ -193,7 +193,6 @@
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="setena11" URI="http://resources/0.1.31/peripheral/cpu/0/iser3/setena11" value="0" toolTipHelpDescription="Writing 0 to a SETENA bit has no effect, writing 1 to a bit enables the corresponding interrupt." defaultValue="0" startPos="11" stopPos="11" accessPermission="rw" maxValue="1" minValue="0"/>
   <provided xsi:type="ResourceModel:ResourceGroup" name="SYSTICK" URI="http://resources/0.1.31/peripheral/cpu/0/systick">
-    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/SYSTIMER/v4_1_12/SYSTIMER_0.app#//@hwResources.0"/>
     <resourcesList name="csr" requiredResourceUri="http://resources/0.1.31/peripheral/cpu/0/stcsr"/>
     <resourcesList name="rvr" requiredResourceUri="http://resources/0.1.31/peripheral/cpu/0/strvr"/>
     <resourcesList name="cvr" requiredResourceUri="http://resources/0.1.31/peripheral/cpu/0/stcvr"/>

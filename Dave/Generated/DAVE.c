@@ -110,6 +110,11 @@ DAVE_STATUS_t DAVE_Init(void)
   {
 	 /**  Initialization of CRC_SW APP instance CRC_SW_0 */
 	 init_status = (DAVE_STATUS_t)CRC_SW_Init(&CRC_SW_0); 
+   } 
+  if (init_status == DAVE_STATUS_SUCCESS)
+  {
+	 /**  Initialization of INTERRUPT APP instance UART_TRANSMIT_IRQ */
+	 init_status = (DAVE_STATUS_t)INTERRUPT_Init(&UART_TRANSMIT_IRQ); 
    }  
   return init_status;
 } /**  End of function DAVE_Init */

@@ -56,13 +56,17 @@
  * MACROS
  **********************************************************************************************************************/
 	
-#define uartReceiveIRQ IRQ_Hdlr_90
+#define uartReceiveIRQ IRQ_Hdlr_91
+		
+#define uartCobsTransmitIRQ IRQ_Hdlr_90
 		
 /***********************************************************************************************************************
  * EXTERN DECLARATIONS
 ***********************************************************************************************************************/
 	
 extern const INTERRUPT_t IRQ_DAISY_UART; 
+	
+extern const INTERRUPT_t UART_TRANSMIT_IRQ; 
 	
 #endif  /* INTERRUPT_EXTERN_H */
 

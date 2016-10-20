@@ -9,14 +9,17 @@
 
 
 #include <DAVE.h>                 //Declarations from DAVE Code Generation (includes SFR declaration)
-#include "./xmc_daisyChain/DaisyChain.h"
+#include "./xmc_daisyChain/uart_cobs.h"
+
+//#include "./xmc_daisyChain/DaisyChain.h"
 /**
 
  * @brief main() - Application entry point
  *
  * <b>Details of function</b><br>
- * This routine is the application entry point. It is invoked by the device startup code. It is responsible for
- * invoking the APP initialization dispatcher routine - DAVE_Init() and hosting the place-holder for user application
+ * This routine is the application entry point. It is invoked by the device startup code.It is
+ * responsible for invoking the APP initialization dispatcher routine - DAVE_Init() and hosting
+ * the place-holder for user application
  * code.
  */
 #define		ONESEC 		1000000U
@@ -56,6 +59,8 @@ int main(void)
 	while(!USBD_VCOM_IsEnumDone());
 
 
+
+
 	uint32_t TimerId = SYSTIMER_CreateTimer(ONEMSEC,SYSTIMER_MODE_PERIODIC,(void*)usbCallback,NULL);
 	if(TimerId != 0U)
 	{
@@ -68,19 +73,21 @@ int main(void)
 		}
 	}
 
-	daisyInit(&UART_DAISY);		// init the daisy chain layer and start uart
-	daisySetRxCallback(receiveCallback);	// set the receive callback function
-
 	while (1U)
 	{
 		CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
 
+		pollUartCobs();
 
 	}
 	return 1;
 }
 
 
+void uartCobsFrameReceived(uint8_t *frame, size_t length) {
+	// do the stuff you want to do with the frame here
+	// like implement this function in the address handling function (daisy)
+}
 
 typedef struct {
 	uint16_t identifier;
@@ -89,8 +96,17 @@ typedef struct {
 	uint16_t led3;
 } PWM_SETTINGS_t;
 
+// dummy systimer callback, used later in parsing vcom serial terminal input via usb
+void usbCallback(void) {
+	static size_t count = 0;
+	if (count++ >= 1000) {
+		count = 0;
+		DIGITAL_IO_ToggleOutput(&LED1);
+		// do nothing or blink an led like every second
+	}
+}
 
-
+/*
 void receiveCallback(uint8_t address,uint8_t length,uint8_t *buf) {
 	uint8_t cnt = 5;
 	char mesBuf[200] = {"empty"};
@@ -113,7 +129,8 @@ void receiveCallback(uint8_t address,uint8_t length,uint8_t *buf) {
 
 	USBD_VCOM_SendData((int8_t*)mesBuf,cnt);
 }
-
+*/
+/*
 typedef enum {
 	DAISY_NONE,
 	DAISY_AUTO_DISCOVER,
@@ -144,7 +161,8 @@ void send_commands(DAISY_CHAIN_COMMANDS_t com) {
 		return;
 	}
 }
-
+*/
+/*
 void usbCallback(void) {
 	static uint8_t bytes = 0;
 	uint8_t bytesReceived = 0;
@@ -195,4 +213,4 @@ void usbCallback(void) {
 		bytes = 0;
 	}
 }
-
+*/

@@ -3,7 +3,7 @@
     <ResourceReserve/>
     <Solver>
         <SolverBndMap>
-            <BindMap MUri="peripheral/cpu/0/nvic/interrupt/90" Proxy="app/INTERRUPT/1/hwres_nvicnode"/>
+            <BindMap MUri="peripheral/cpu/0/nvic/interrupt/91" Proxy="app/INTERRUPT/1/hwres_nvicnode"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/pll" Proxy="app/CLOCK_XMC4/0/hwres_pll"/>
             <BindMap MUri="peripheral/cpu/0/exception/memmanage" Proxy="app/CPU_CTRL_XMC4/0/hwres_exception_memmanage"/>
             <BindMap MUri="peripheral/cpu/0/systick" Proxy="app/SYSTIMER/0/hwres_syst"/>
@@ -28,6 +28,7 @@
             <BindMap MUri="peripheral/cpu/0/exception/hardfault" Proxy="app/CPU_CTRL_XMC4/0/hwres_exception_hardfault"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/wdt" Proxy="app/CLOCK_XMC4/0/hwres_wdt"/>
             <BindMap MUri="devicepackage/0/79" Proxy="app/DIGITAL_IO/5/__pin_hwres_port_pin"/>
+            <BindMap MUri="peripheral/cpu/0/nvic/interrupt/90" Proxy="app/INTERRUPT/2/hwres_nvicnode"/>
             <BindMap MUri="peripheral/scu/0/trap/0/ulpwdg" Proxy="app/CLOCK_XMC4/0/hwres_ulpwdg_trap"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/usb" Proxy="app/CLOCK_XMC4/0/hwres_usb"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/sdmmc" Proxy="app/CLOCK_XMC4/0/hwres_mmc"/>

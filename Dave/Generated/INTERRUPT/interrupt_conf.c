@@ -69,12 +69,26 @@ const INTERRUPT_t IRQ_DAISY_UART =
 #if(UC_SERIES == XMC14)
  .irqctrl = (XMC_SCU_IRQCTRL_t)0U,
 #endif
-  .node = (IRQn_Type)90,
+  .node = (IRQn_Type)91,
   .priority = 40,  
 #if(UC_FAMILY == XMC4)  
   .subpriority = 0,
 #endif  
 
   .enable_at_init = true
+
+};
+const INTERRUPT_t UART_TRANSMIT_IRQ =
+{
+#if(UC_SERIES == XMC14)
+ .irqctrl = (XMC_SCU_IRQCTRL_t)0U,
+#endif
+  .node = (IRQn_Type)90,
+  .priority = 63,  
+#if(UC_FAMILY == XMC4)  
+  .subpriority = 0,
+#endif  
+
+  .enable_at_init = false
 
 };

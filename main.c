@@ -6,7 +6,7 @@
  */
 
 #include <DAVE.h>                 //Declarations from DAVE Code Generation (includes SFR declaration)
-#include "./xmc_daisyChain/uart_cobs.h"
+#include "./xmc_daisyChain/DaisyChain.h"
 
 //#include "./xmc_daisyChain/DaisyChain.h"
 /**
@@ -52,7 +52,9 @@ int main(void) {
 	while (!USBD_VCOM_IsEnumDone())
 		;
 
-	uartCobsInit(UART_DAISY.channel);
+	daisyInit(&UART_DAISY);
+
+	//uartCobsInit(UART_DAISY.channel);
 
 	while (1U) {
 

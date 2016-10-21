@@ -49,37 +49,20 @@ int main(void) {
 	if (USBD_VCOM_Connect() != USBD_VCOM_STATUS_SUCCESS) {
 		return -1;
 	}
-	while (!USBD_VCOM_IsEnumDone());
-/*
-	uint32_t TimerId = SYSTIMER_CreateTimer(ONEMSEC, SYSTIMER_MODE_PERIODIC,(void*) usbCallback, NULL);
-	if (TimerId != 0U) {
-		// Timer is created successfully
-		// Start/Run Software Timer
-		uint32_t status = SYSTIMER_StartTimer(TimerId);
-		if (status == SYSTIMER_STATUS_SUCCESS) {
-			// Timer is running
-		}
-	}
-*/
+	while (!USBD_VCOM_IsEnumDone())
+		;
+
 	uartCobsInit(UART_DAISY.channel);
 
 	while (1U) {
 
 		usbCallback();
 
-
-		pollUartCobs();
+		daisyWorker();
 
 		CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
 	}
 	return 1;
-}
-
-void uartCobsFrameReceived(uint8_t *frame, size_t length) {
-
-	sendPing();
-	// do the stuff you want to do with the frame here
-	// like implement this function in the address handling function (daisy)
 }
 
 typedef struct {
@@ -114,13 +97,6 @@ typedef struct {
  }
  */
 /*
- typedef enum {
- DAISY_NONE,
- DAISY_AUTO_DISCOVER,
- DAISY_PING,
- DAISY_SET_ALL,
- DAISY_RESET_ALL
- } DAISY_CHAIN_COMMANDS_t;
  PWM_SETTINGS_t leds;
  void send_commands(DAISY_CHAIN_COMMANDS_t com) {
  //	PWM_SETTINGS_t leds = { 0x11,0x22,0x33,0x44 };
@@ -142,15 +118,6 @@ typedef struct {
  break;
  case DAISY_NONE:
  return;
- }
- }
-
- void usbCallback(void) {
- static size_t count = 0;
- if (count++ >= 1000) {
- count = 0;
- DIGITAL_IO_ToggleOutput(&LED1);
- // do nothing or blink an led like every second
  }
  }
  */
@@ -179,7 +146,7 @@ void usbCallback(void) {
 				if (str == NULL) {
 					break;
 				} else if (strncmp("test", str, bytes) == 0) {
-					uart_cobs_transmit((uint8_t*) &leds, sizeof(leds));
+					uartCobsTransmit((uint8_t*) &leds, sizeof(leds));
 				}
 
 			}
@@ -189,5 +156,4 @@ void usbCallback(void) {
 	}
 	bytes = 0;
 }
-
 

@@ -153,6 +153,8 @@ void usbCallback(void) {
 				} else if (strncmp("test", str, bytes) == 0) {
 //					uartCobsTransmit((uint8_t*) str, strlen(str));
 					daisySendData(DAISY_BROADCAST, DAISY_MASTER, (uint8_t*) str,strlen(str)+1);
+					daisySendData(DAISY_BROADCAST, DAISY_MASTER, (uint8_t*) str,
+							strlen(str)+1);
 				}
 
 			}

@@ -61,9 +61,6 @@
 #include "CPU_CTRL_XMC4/cpu_ctrl_xmc4.h"
   
 
-#include "INTERRUPT/interrupt.h"
-  
-
 #include "USBD/usbd.h"
   
 
@@ -71,6 +68,9 @@
   
 
 #include "CRC_SW/crc_sw.h"
+  
+
+#include "INTERRUPT/interrupt.h"
   
 	
 

@@ -21,6 +21,7 @@
  */
 #define		ONESEC 		1000000U
 #define		ONEMSEC		1000U
+#define		DAISY_MASTER_DEVICE
 
 #define BUF_SIZE	(64u)
 int8_t RxBuffer[BUF_SIZE] = { 0 };
@@ -49,7 +50,8 @@ int main(void) {
 	if (USBD_VCOM_Connect() != USBD_VCOM_STATUS_SUCCESS) {
 		return -1;
 	}
-	while (!USBD_VCOM_IsEnumDone());
+	while (!USBD_VCOM_IsEnumDone())
+		;
 
 	daisyInit(&UART_DAISY);
 
@@ -58,7 +60,6 @@ int main(void) {
 	while (1U) {
 
 		usbCallback();
-
 
 		// crash when calling daisy worker
 		// and data is received
@@ -76,7 +77,8 @@ typedef struct {
 	uint16_t led3;
 } PWM_SETTINGS_t;
 
-void daisyPacketReceived(uint8_t receive_address,uint8_t sender_address, uint8_t *buf, size_t length) {
+void daisyPacketReceived(uint8_t receive_address, uint8_t sender_address,
+		uint8_t *buf, size_t length) {
 	uint8_t cnt = 5;
 	char mesBuf[200] = { "empty" };
 //	PWM_SETTINGS_t* ptr;
@@ -86,19 +88,14 @@ void daisyPacketReceived(uint8_t receive_address,uint8_t sender_address, uint8_t
 			cnt = snprintf(mesBuf, 200, "Devices found: %d\n", buf[0]);
 		break;
 	case DAISY_BROADCAST:
-/*		if (length == sizeof(PWM_SETTINGS_t)) {
-			ptr = (PWM_SETTINGS_t*) buf;
-			cnt = snprintf(mesBuf, 200, "LEDs set to %d %d %d\n", ptr->led1,
-					ptr->led2, ptr->led3);
-		}
-*/		cnt = snprintf(mesBuf,200,"String received: %s\n",buf);
+		cnt = snprintf(mesBuf, 200, "String received: %s\n", buf);
 		break;
 	case DAISY_ERROR:
 		cnt = snprintf(mesBuf, 200, "An Error has occured\n");
 		break;
 	}
 
-	USBD_VCOM_SendData( (int8_t*)mesBuf, cnt);
+	USBD_VCOM_SendData((int8_t*) mesBuf, cnt);
 }
 
 /*
@@ -152,9 +149,10 @@ void usbCallback(void) {
 					break;
 				} else if (strncmp("test", str, bytes) == 0) {
 //					uartCobsTransmit((uint8_t*) str, strlen(str));
-					daisySendData(DAISY_BROADCAST, DAISY_MASTER, (uint8_t*) str,strlen(str)+1);
 					daisySendData(DAISY_BROADCAST, DAISY_MASTER, (uint8_t*) str,
-							strlen(str)+1);
+							strlen(str) + 1);
+					daisySendData(DAISY_BROADCAST, DAISY_MASTER, (uint8_t*) str,
+							strlen(str) + 1);
 				}
 
 			}

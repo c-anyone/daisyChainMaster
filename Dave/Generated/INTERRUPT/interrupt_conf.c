@@ -64,20 +64,6 @@
  * DATA STRUCTURES
  **********************************************************************************************************************/
 
-const INTERRUPT_t IRQ_DAISY_UART =
-{
-#if(UC_SERIES == XMC14)
- .irqctrl = (XMC_SCU_IRQCTRL_t)0U,
-#endif
-  .node = (IRQn_Type)64,
-  .priority = 40,  
-#if(UC_FAMILY == XMC4)  
-  .subpriority = 0,
-#endif  
-
-/* sr_irq signal is not connected to any peripheral */
-  .enable_at_init = false 
-};
 const INTERRUPT_t UART_TRANSMIT_IRQ =
 {
 #if(UC_SERIES == XMC14)

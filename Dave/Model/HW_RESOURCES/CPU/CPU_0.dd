@@ -30,7 +30,6 @@
     <resourcesList name="shpr1_pri_6" requiredResourceUri="http://resources/0.1.31/peripheral/cpu/0/shpr1/pri_6"/>
   </provided>
   <provided xsi:type="ResourceModel:ResourceGroup" name="CCU81_0_IRQHandler" URI="http://resources/0.1.31/peripheral/cpu/0/nvic/interrupt/64">
-    <upwardMapList xsi:type="ResourceModel:HWResource" href="../../APPS/INTERRUPT/v4_0_8/INTERRUPT_1.app#//@hwResources.0"/>
     <resourcesList name="iser_setena" requiredResourceUri="http://resources/0.1.31/peripheral/cpu/0/iser2/setena0"/>
     <resourcesList name="icer_clrena" requiredResourceUri="http://resources/0.1.31/peripheral/cpu/0/icer2/clrena0"/>
     <resourcesList name="ispr_setpend" requiredResourceUri="http://resources/0.1.31/peripheral/cpu/0/ispr2/setpend0"/>

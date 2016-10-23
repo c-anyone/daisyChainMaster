@@ -28,7 +28,7 @@ int8_t TxBuffer[BUF_SIZE] = { 0 };
 uint8_t Bytes;
 
 static void usbCallback(void);
-void receiveCallback(uint8_t address, uint8_t length, uint8_t *buf);
+//void receiveCallback(uint8_t address, uint8_t length, uint8_t *buf);
 
 void sendPing() {
 	DIGITAL_IO_ToggleOutput(&LED1);
@@ -49,8 +49,7 @@ int main(void) {
 	if (USBD_VCOM_Connect() != USBD_VCOM_STATUS_SUCCESS) {
 		return -1;
 	}
-	while (!USBD_VCOM_IsEnumDone())
-		;
+	while (!USBD_VCOM_IsEnumDone());
 
 	daisyInit(&UART_DAISY);
 
@@ -60,6 +59,9 @@ int main(void) {
 
 		usbCallback();
 
+
+		// crash when calling daisy worker
+		// and data is received
 		daisyWorker();
 
 		CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
@@ -74,30 +76,31 @@ typedef struct {
 	uint16_t led3;
 } PWM_SETTINGS_t;
 
-/*
- void receiveCallback(uint8_t address,uint8_t length,uint8_t *buf) {
- uint8_t cnt = 5;
- char mesBuf[200] = {"empty"};
- PWM_SETTINGS_t* ptr;
- switch(address) {
- case DAISY_ADDR_COUNT:
- if(length>0)
- cnt = snprintf(mesBuf,200,"Devices found: %d\n",buf[0]);
- break;
- case DAISY_BROADCAST:
- if(length == sizeof(PWM_SETTINGS_t)) {
- ptr = (PWM_SETTINGS_t*) buf;
- cnt = snprintf(mesBuf,200,"LEDs set to %d %d %d\n",ptr->led1,ptr->led2,ptr->led3);
- }
- break;
- case DAISY_ERROR:
- cnt = snprintf(mesBuf,200,"An Error has occured\n");
- break;
- }
+void daisyPacketReceived(uint8_t receive_address,uint8_t sender_address, uint8_t *buf, size_t length) {
+	uint8_t cnt = 5;
+	char mesBuf[200] = { "empty" };
+//	PWM_SETTINGS_t* ptr;
+	switch (receive_address) {
+	case DAISY_ADDR_COUNT:
+		if (length > 0)
+			cnt = snprintf(mesBuf, 200, "Devices found: %d\n", buf[0]);
+		break;
+	case DAISY_BROADCAST:
+/*		if (length == sizeof(PWM_SETTINGS_t)) {
+			ptr = (PWM_SETTINGS_t*) buf;
+			cnt = snprintf(mesBuf, 200, "LEDs set to %d %d %d\n", ptr->led1,
+					ptr->led2, ptr->led3);
+		}
+*/		cnt = snprintf(mesBuf,200,"String received: %s\n",buf);
+		break;
+	case DAISY_ERROR:
+		cnt = snprintf(mesBuf, 200, "An Error has occured\n");
+		break;
+	}
 
- USBD_VCOM_SendData((int8_t*)mesBuf,cnt);
- }
- */
+	USBD_VCOM_SendData( (int8_t*)mesBuf, cnt);
+}
+
 /*
  PWM_SETTINGS_t leds;
  void send_commands(DAISY_CHAIN_COMMANDS_t com) {
@@ -148,7 +151,8 @@ void usbCallback(void) {
 				if (str == NULL) {
 					break;
 				} else if (strncmp("test", str, bytes) == 0) {
-					uartCobsTransmit((uint8_t*) &leds, sizeof(leds));
+//					uartCobsTransmit((uint8_t*) str, strlen(str));
+					daisySendData(DAISY_BROADCAST, DAISY_MASTER, (uint8_t*) str,strlen(str)+1);
 				}
 
 			}

@@ -83,11 +83,6 @@ DAVE_STATUS_t DAVE_Init(void)
    } 
   if (init_status == DAVE_STATUS_SUCCESS)
   {
-	 /**  Initialization of INTERRUPT APP instance IRQ_DAISY_UART */
-	 init_status = (DAVE_STATUS_t)INTERRUPT_Init(&IRQ_DAISY_UART); 
-   } 
-  if (init_status == DAVE_STATUS_SUCCESS)
-  {
 	 /**  Initialization of USBD_VCOM APP instance USBD_VCOM_0 */
 	 init_status = (DAVE_STATUS_t)USBD_VCOM_Init(&USBD_VCOM_0); 
    } 

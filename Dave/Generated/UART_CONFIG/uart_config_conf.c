@@ -98,7 +98,7 @@ const UART_CONFIG_CONF_t UART_DAISY_config =
   .pulse_length = 0U,
   .uart_config_init = UART_DAISY_lInit,
   .mode = UART_CONFIG_MODE_FULLDUPLEX,
-  .tx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_16WORDS,
+  .tx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_4WORDS,
   .tx_fifo_limit     = 0U,
   .rx_fifo_size     = XMC_USIC_CH_FIFO_SIZE_16WORDS,
   .rx_fifo_limit     = 0U
@@ -124,7 +124,7 @@ void UART_DAISY_lInit()
   /* Set input source for input stage dx0 (receive pin) */
   XMC_USIC_CH_SetInputSource(XMC_UART1_CH0, (XMC_USIC_CH_INPUT_t)XMC_UART_CH_INPUT_RXD, 0U);
   /* Configure the transmit FIFO */
-  XMC_USIC_CH_TXFIFO_Configure(UART_DAISY.channel, 16U, XMC_USIC_CH_FIFO_SIZE_16WORDS, 0U);
+  XMC_USIC_CH_TXFIFO_Configure(UART_DAISY.channel, 16U, XMC_USIC_CH_FIFO_SIZE_4WORDS, 0U);
   /* Configure the receive FIFO */
   XMC_USIC_CH_RXFIFO_Configure(UART_DAISY.channel, 0U, XMC_USIC_CH_FIFO_SIZE_16WORDS, 0U);
   /* Set the service request line for the transmit buffer event */

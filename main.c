@@ -87,10 +87,10 @@ void daisyPacketReceived(uint8_t receive_address, uint8_t sender_address,
 		if (length > 0)
 			cnt = snprintf(mesBuf, 200, "Devices found: %d\n", buf[0]);
 		break;
-	case DAISY_BROADCAST:
+	case DAISY_ADDR_BROADCAST:
 		cnt = snprintf(mesBuf, 200, "String received: %s\n", buf);
 		break;
-	case DAISY_ERROR:
+	case DAISY_ADDR_ERROR:
 		cnt = snprintf(mesBuf, 200, "An Error has occured\n");
 		break;
 	}
@@ -148,15 +148,9 @@ void usbCallback(void) {
 				if (str == NULL) {
 					break;
 				} else if (strncmp("test", str, bytes) == 0) {
-//					uartCobsTransmit((uint8_t*) str, strlen(str));
-					daisySendData(DAISY_BROADCAST, DAISY_MASTER, (uint8_t*) str,
-							strlen(str) + 1);
-					daisySendData(DAISY_BROADCAST, DAISY_MASTER, (uint8_t*) str,
-							strlen(str) + 1);
+					daisySendData(DAISY_ADDR_BROADCAST, DAISY_ADDR_MASTER, (uint8_t*) str, strlen(str) + 1);
 				}
-
 			}
-
 			return;
 		}
 	}

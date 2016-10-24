@@ -5,10 +5,13 @@
  *  Author: Fabio Pungg
  */
 
+
 #include <DAVE.h>                 //Declarations from DAVE Code Generation (includes SFR declaration)
 #include "./xmc_daisyChain/DaisyChain.h"
+#include "led_commands.h"
 
-//#include "./xmc_daisyChain/DaisyChain.h"
+
+#define BUF_SIZE	(64u)
 /**
 
  * @brief main() - Application entry point
@@ -19,22 +22,13 @@
  * the place-holder for user application
  * code.
  */
-#define		ONESEC 		1000000U
-#define		ONEMSEC		1000U
-#define		DAISY_MASTER_DEVICE
 
-#define BUF_SIZE	(64u)
-int8_t RxBuffer[BUF_SIZE] = { 0 };
-int8_t TxBuffer[BUF_SIZE] = { 0 };
+uint8_t RxBuffer[BUF_SIZE] = { 0 };
+uint8_t TxBuffer[BUF_SIZE] = { 0 };
 uint8_t Bytes;
 
 static void usbCallback(void);
-//void receiveCallback(uint8_t address, uint8_t length, uint8_t *buf);
-
-void sendPing() {
-	DIGITAL_IO_ToggleOutput(&LED1);
-	DIGITAL_IO_ToggleOutput(&LED2);
-}
+static inline void parseAndAct(size_t bytes);
 
 int main(void) {
 	DAVE_STATUS_t status;
@@ -55,14 +49,10 @@ int main(void) {
 
 	daisyInit(&UART_DAISY);
 
-	//uartCobsInit(UART_DAISY.channel);
-
 	while (1U) {
 
 		usbCallback();
 
-		// crash when calling daisy worker
-		// and data is received
 		daisyWorker();
 
 		CDC_Device_USBTask(&USBD_VCOM_cdc_interface);
@@ -70,25 +60,17 @@ int main(void) {
 	return 1;
 }
 
-typedef struct {
-	uint16_t identifier;
-	uint16_t led1;		// zero equals off
-	uint16_t led2;
-	uint16_t led3;
-} PWM_SETTINGS_t;
-
 void daisyPacketReceived(uint8_t receive_address, uint8_t sender_address,
 		uint8_t *buf, size_t length) {
 	uint8_t cnt = 5;
 	char mesBuf[200] = { "empty" };
-//	PWM_SETTINGS_t* ptr;
 	switch (receive_address) {
 	case DAISY_ADDR_COUNT:
 		if (length > 0)
-			cnt = snprintf(mesBuf, 200, "Devices found: %d\n", buf[0]);
+			cnt = snprintf(mesBuf, 200, "Devices found: %d\n", sender_address);
 		break;
 	case DAISY_ADDR_BROADCAST:
-		cnt = snprintf(mesBuf, 200, "String received: %s\n", buf);
+		cnt = snprintf(mesBuf, 200, "Sent Command: %d\n",buf[0]);
 		break;
 	case DAISY_ADDR_ERROR:
 		cnt = snprintf(mesBuf, 200, "An Error has occured\n");
@@ -98,62 +80,103 @@ void daisyPacketReceived(uint8_t receive_address, uint8_t sender_address,
 	USBD_VCOM_SendData((int8_t*) mesBuf, cnt);
 }
 
-/*
- PWM_SETTINGS_t leds;
- void send_commands(DAISY_CHAIN_COMMANDS_t com) {
- //	PWM_SETTINGS_t leds = { 0x11,0x22,0x33,0x44 };
- uint8_t tmp = 0;
- switch(com) {
- case DAISY_AUTO_DISCOVER:
- daisySendData(DAISY_ADDR_COUNT,1,&tmp);
- break;
- case DAISY_PING:
- daisySendData(DAISY_BROADCAST,0,&tmp);
- break;
- case DAISY_SET_ALL:
- leds.led1 = leds.led2 = leds.led3 = 0;
- daisySendData(DAISY_BROADCAST,sizeof(leds),(uint8_t*) &leds);
- break;
- case DAISY_RESET_ALL:
- leds.led1 = leds.led2 = leds.led3 = 10000;
- daisySendData(DAISY_BROADCAST,sizeof(leds),(uint8_t*) &leds);
- break;
- case DAISY_NONE:
- return;
- }
- }
- */
-
-PWM_SETTINGS_t leds = { .identifier = 0x4142, .led1 = 0x4300, .led2 = 0x4400,
-		.led3 = 0x4545 };
-
 void usbCallback(void) {
 	static uint8_t bytes = 0;
 	uint8_t bytesReceived = 0;
 
-	char *str;
-	char *saveptr = NULL;
+
 	bytesReceived = USBD_VCOM_BytesReceived();
 
 	if (bytesReceived) {
 		while (bytes < BUF_SIZE && bytesReceived > 0) {
-			USBD_VCOM_ReceiveByte(&RxBuffer[bytes]);
+			USBD_VCOM_ReceiveByte((int8_t*)&RxBuffer[bytes]);
 			--bytesReceived;
 			++bytes;
 
 			// if the string ends in LF or CR, evaluate and act accordingly
 			if (RxBuffer[bytes - 1] == '\n' || RxBuffer[bytes - 1] == '\r') {
 				RxBuffer[bytes - 1] = '\0';
-				str = strtok_r((char*) RxBuffer, " ", &saveptr);
-				if (str == NULL) {
-					break;
-				} else if (strncmp("test", str, bytes) == 0) {
-					daisySendData(DAISY_ADDR_BROADCAST, DAISY_ADDR_MASTER, (uint8_t*) str, strlen(str) + 1);
-				}
+				parseAndAct(bytes);
 			}
 			return;
 		}
 	}
 	bytes = 0;
+}
+
+typedef enum {
+	DAISY_NONE,
+	DAISY_AUTO_DISCOVER,
+	DAISY_PING,
+	DAISY_SET_ALL,
+	DAISY_RESET_ALL,
+	DAISY_GET_TEMPS,
+	DAISY_GET_TYPES
+} DAISY_CHAIN_COMMANDS_t;
+
+static void daisyBroadcastCommand(DAISY_CHAIN_COMMANDS_t command){
+	uint8_t data,addr,sender;
+	sender = DAISY_ADDR_MASTER;
+	switch(command) {
+	case DAISY_AUTO_DISCOVER:
+		addr = (uint8_t)DAISY_ADDR_COUNT;
+		data = 0;
+		break;
+	case DAISY_SET_ALL:
+		addr = DAISY_ADDR_BROADCAST;
+		data = (uint8_t) LED_COMMAND_ON;
+		break;
+	case DAISY_RESET_ALL:
+		addr = DAISY_ADDR_BROADCAST;
+		data = (uint8_t) LED_COMMAND_OFF;
+		break;
+	case DAISY_GET_TEMPS:
+		addr = DAISY_ADDR_BROADCAST;
+		data = (uint8_t) LED_COMMAND_GET_TEMP;
+		break;
+	case DAISY_GET_TYPES:
+		addr = DAISY_ADDR_BROADCAST;
+		data = (uint8_t) LED_COMMAND_GET_TYPES;
+		break;
+	default:
+		return;
+	}
+	daisySendData(addr,sender,&data,1);
+}
+
+static inline void parseAndAct(size_t bytes) {
+	char *str;
+	char *saveptr = NULL;
+	PWM_SETTINGS_t leds;
+	str = strtok_r((char*) RxBuffer, " ", &saveptr);
+	if (str == NULL) {
+		return;
+	}
+	if (strncmp("discover", str, bytes) == 0) {
+		daisyBroadcastCommand(DAISY_AUTO_DISCOVER);
+	} else if (strncmp("ping", str, bytes) == 0) {
+		daisyBroadcastCommand(DAISY_PING);
+	} else if (strncmp("setall", str, bytes) == 0) {
+		daisyBroadcastCommand(DAISY_SET_ALL);
+	} else if (strncmp("resetall", str, bytes) == 0) {
+		daisyBroadcastCommand(DAISY_RESET_ALL);
+	} else if (strncmp("setsingle", str, bytes) == 0) {
+		uint8_t address;
+
+		str = strtok_r(NULL, " ", &saveptr);
+		address = (uint8_t) atoi(str);
+		leds.led1 = (uint16_t) atoi(strtok_r(NULL, " ", &saveptr));
+		leds.led2 = (uint16_t) atoi(strtok_r(NULL, " ", &saveptr));
+		leds.led3 = (uint16_t) atoi(strtok_r(NULL, " ", &saveptr));
+		bytes = 0;
+		TxBuffer[0] = (uint8_t) LED_COMMAND_SET;
+		memcpy(TxBuffer+1,&leds,sizeof(leds));
+		daisySendData(address,DAISY_ADDR_MASTER, TxBuffer, sizeof(leds)+1);
+
+	} else if (strncmp("temperature",str,bytes) == 0) {
+
+	} else if (strncmp("types",str,bytes) == 0) {
+
+	}
 }
 

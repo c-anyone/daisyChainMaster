@@ -368,5 +368,6 @@
     <Preprocessor_Symbols>
         <Assembler_Symbol>XMC4500_F100x1024=</Assembler_Symbol>
         <Compiler_Symbol>XMC4500_F100x1024=</Compiler_Symbol>
+        <Compiler_Symbol>DAISY_MASTER_DEVICE=</Compiler_Symbol>
     </Preprocessor_Symbols>
 </Project>

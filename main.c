@@ -44,8 +44,7 @@ int main(void) {
 	if (USBD_VCOM_Connect() != USBD_VCOM_STATUS_SUCCESS) {
 		return -1;
 	}
-	while (!USBD_VCOM_IsEnumDone())
-		;
+	while (!USBD_VCOM_IsEnumDone());
 
 	daisyInit(&UART_DAISY);
 

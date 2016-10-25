@@ -6,7 +6,7 @@
  */
 
 #include <DAVE.h>                 //Declarations from DAVE Code Generation (includes SFR declaration)
-#include "./xmc_daisyChain/DaisyChain.h"
+#include "xmc_daisyChain/DaisyChain.h"
 #include "led_commands.h"
 
 #define BUF_SIZE	(64u)
@@ -58,18 +58,15 @@ int main(void) {
 	return 1;
 }
 
-static inline int printPWMSettings(char *mesBuf, int free, uint8_t *buf,
-		size_t length) {
+static inline int printPWMSettings(char *mesBuf, int free, uint8_t *buf, size_t length) {
 	PWM_SETTINGS_t *ptr;
-//	if (length != sizeof(PWM_SETTINGS_t) || buf == NULL)
-//		return 0;
+	if (length != sizeof(PWM_SETTINGS_t))
+		return 0;
 	ptr = (PWM_SETTINGS_t*) buf;
-
 	return snprintf(mesBuf, free, "%d %d %d\n", ptr->led1, ptr->led2, ptr->led3);
 }
 
-static inline int printLEDTypes(char *mesBuf, int free, uint8_t *buf,
-		size_t length) {
+static inline int printLEDTypes(char *mesBuf, int free, uint8_t *buf, size_t length) {
 	ledtype_t *ptr;
 	if (length != sizeof(ledtype_t) || buf == NULL)
 		return 0;
@@ -95,6 +92,8 @@ static inline int PrintCmd(char *mesBuf, uint8_t sender_address, uint8_t *packet
 		break;
 	case LED_COMMAND_GET_PWM_SETTINGS:
 		// unpack PWM settings and put into mesBuf here
+		if(length-1 != sizeof(PWM_SETTINGS_t))
+			return 0;
 		retval += printPWMSettings(mesBuf+retval,200-retval,&packet[1],length-1);
 		break;
 	default:

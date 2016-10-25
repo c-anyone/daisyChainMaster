@@ -83,18 +83,8 @@ DAVE_STATUS_t DAVE_Init(void)
    } 
   if (init_status == DAVE_STATUS_SUCCESS)
   {
-	 /**  Initialization of INTERRUPT APP instance IRQ_DAISY_UART */
-	 init_status = (DAVE_STATUS_t)INTERRUPT_Init(&IRQ_DAISY_UART); 
-   } 
-  if (init_status == DAVE_STATUS_SUCCESS)
-  {
 	 /**  Initialization of USBD_VCOM APP instance USBD_VCOM_0 */
 	 init_status = (DAVE_STATUS_t)USBD_VCOM_Init(&USBD_VCOM_0); 
-   } 
-  if (init_status == DAVE_STATUS_SUCCESS)
-  {
-	 /**  Initialization of SYSTIMER APP instance SYSTIMER_0 */
-	 init_status = (DAVE_STATUS_t)SYSTIMER_Init(&SYSTIMER_0); 
    } 
   if (init_status == DAVE_STATUS_SUCCESS)
   {
@@ -105,6 +95,16 @@ DAVE_STATUS_t DAVE_Init(void)
   {
 	 /**  Initialization of DIGITAL_IO APP instance LED2 */
 	 init_status = (DAVE_STATUS_t)DIGITAL_IO_Init(&LED2); 
+   } 
+  if (init_status == DAVE_STATUS_SUCCESS)
+  {
+	 /**  Initialization of CRC_SW APP instance CRC_SW_0 */
+	 init_status = (DAVE_STATUS_t)CRC_SW_Init(&CRC_SW_0); 
+   } 
+  if (init_status == DAVE_STATUS_SUCCESS)
+  {
+	 /**  Initialization of INTERRUPT APP instance UART_TRANSMIT_IRQ */
+	 init_status = (DAVE_STATUS_t)INTERRUPT_Init(&UART_TRANSMIT_IRQ); 
    }  
   return init_status;
 } /**  End of function DAVE_Init */

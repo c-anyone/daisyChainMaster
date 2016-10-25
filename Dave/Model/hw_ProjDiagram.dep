@@ -149,12 +149,12 @@
     <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="271" height="351" x="220" y="313">
       <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" lineWidth="2" transparency="0.0" width="231" height="351" x="20" style="//@styles.0/@styles.3" cornerHeight="5" cornerWidth="5"/>
     </graphicsAlgorithm>
-    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.1/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" outgoingConnections="//@connections.2" referencedGraphicsAlgorithm="//@children.1/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
       <properties key="SignalName" value="transmit_buffer_event"/>
       <properties key="uri" value="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_standard_tx_event"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="230" y="130"/>
     </anchors>
-    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" outgoingConnections="//@connections.1" referencedGraphicsAlgorithm="//@children.1/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.1/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
       <properties key="SignalName" value="standard_receive_event"/>
       <properties key="uri" value="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_standard_rx_event"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="230" y="151"/>
@@ -189,7 +189,7 @@
       <properties key="uri" value="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_fifo_tx_err_event"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="230" y="270"/>
     </anchors>
-    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" outgoingConnections="//@connections.3" referencedGraphicsAlgorithm="//@children.1/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.1/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
       <properties key="SignalName" value="fifo_standard_receive_buffer_event"/>
       <properties key="uri" value="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_fifo_rx_event"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="230" y="290"/>
@@ -204,7 +204,7 @@
       <properties key="uri" value="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_fifo_alt_rx_event"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="230" y="330"/>
     </anchors>
-    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" incomingConnections="//@connections.2" referencedGraphicsAlgorithm="//@children.1/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" incomingConnections="//@connections.1" referencedGraphicsAlgorithm="//@children.1/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
       <properties key="SignalName" value="rxd"/>
       <properties key="uri" value="http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_dx0ins"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="-20" y="50"/>
@@ -414,7 +414,7 @@
     <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="161" height="91" x="20" y="734">
       <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" lineWidth="2" transparency="0.0" width="121" height="91" x="20" style="//@styles.0/@styles.3" cornerHeight="5" cornerWidth="5"/>
     </graphicsAlgorithm>
-    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" outgoingConnections="//@connections.2" referencedGraphicsAlgorithm="//@children.2/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" outgoingConnections="//@connections.1" referencedGraphicsAlgorithm="//@children.2/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
       <properties key="SignalName" value="pin"/>
       <properties key="uri" value="http://resources/4.0.14/app/DIGITAL_IO/0/vs_digital_io_pad_pin"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="120" y="50"/>
@@ -560,47 +560,6 @@
     </children>
   </children>
   <children xsi:type="pi:ContainerShape" visible="true" active="true">
-    <properties key="uri" value="http://resources/4.0.8/app/INTERRUPT/1"/>
-    <properties key="APP_NAME_ID" value="INTERRUPT/1"/>
-    <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="171" height="71" x="550" y="528">
-      <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" lineWidth="2" transparency="0.0" width="131" height="71" x="20" style="//@styles.0/@styles.3" cornerHeight="5" cornerWidth="5"/>
-    </graphicsAlgorithm>
-    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" incomingConnections="//@connections.1 //@connections.3" referencedGraphicsAlgorithm="//@children.5/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
-      <properties key="SignalName" value="sr_irq"/>
-      <properties key="uri" value="http://resources/4.0.8/app/INTERRUPT/1/vs_nvic_signal_in"/>
-      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="-20" y="50"/>
-    </anchors>
-    <children visible="true">
-      <graphicsAlgorithm xsi:type="al:Polyline" lineStyle="UNSPECIFIED" style="//@styles.0">
-        <points x="20" y="40"/>
-        <points x="151" y="40"/>
-      </graphicsAlgorithm>
-    </children>
-    <children xsi:type="pi:ContainerShape" visible="true">
-      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="131" height="20" x="20"/>
-      <children visible="true">
-        <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="129" height="20" x="2" style="//@styles.0/@styles.0" horizontalAlignment="ALIGNMENT_CENTER" value="INTERRUPT"/>
-      </children>
-    </children>
-    <children xsi:type="pi:ContainerShape" visible="true">
-      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="131" height="20" x="20" y="20"/>
-      <children visible="true">
-        <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="129" height="20" x="2" style="//@styles.0/@styles.1" horizontalAlignment="ALIGNMENT_CENTER" value="IRQ_DAISY_UART">
-          <properties key="AppInstanceLabel" value="INTERRUPT_1"/>
-        </graphicsAlgorithm>
-      </children>
-    </children>
-    <children visible="true" active="true">
-      <properties key="SignalName" value="sr_irq"/>
-      <properties key="uri" value="http://resources/4.0.8/app/INTERRUPT/1/vs_nvic_signal_in"/>
-      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="30"/>
-    </children>
-    <children visible="true">
-      <properties key="uri" value="http://resources/4.0.8/app/INTERRUPT/1/vs_nvic_signal_in"/>
-      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.2" lineStyle="UNSPECIFIED" width="96" height="20" x="25" y="45" style="//@styles.0/@styles.2" value="sr_irq"/>
-    </children>
-  </children>
-  <children xsi:type="pi:ContainerShape" visible="true" active="true">
     <properties key="uri" value="http://resources/4.0.14/app/USBD/0"/>
     <properties key="APP_NAME_ID" value="USBD/0"/>
     <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="191" height="171" x="25" y="20">
@@ -633,12 +592,12 @@
     <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="161" height="91" x="20" y="342">
       <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" lineWidth="2" transparency="0.0" width="121" height="91" x="20" style="//@styles.0/@styles.3" cornerHeight="5" cornerWidth="5"/>
     </graphicsAlgorithm>
-    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.7/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
       <properties key="SignalName" value="pin"/>
       <properties key="uri" value="http://resources/4.0.14/app/DIGITAL_IO/4/vs_digital_io_pad_pin"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="120" y="50"/>
     </anchors>
-    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.7/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.6/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
       <properties key="SignalName" value="hardware pin control"/>
       <properties key="uri" value="http://resources/4.0.14/app/DIGITAL_IO/4/vs_digital_io_hwsel"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="120" y="70"/>
@@ -688,12 +647,12 @@
     <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="161" height="91" x="20" y="865">
       <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" lineWidth="2" transparency="0.0" width="121" height="91" x="20" style="//@styles.0/@styles.3" cornerHeight="5" cornerWidth="5"/>
     </graphicsAlgorithm>
-    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.8/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" referencedGraphicsAlgorithm="//@children.7/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
       <properties key="SignalName" value="pin"/>
       <properties key="uri" value="http://resources/4.0.14/app/DIGITAL_IO/5/vs_digital_io_pad_pin"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="120" y="50"/>
     </anchors>
-    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.8/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+    <anchors xsi:type="pi:BoxRelativeAnchor" active="true" referencedGraphicsAlgorithm="//@children.7/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
       <properties key="SignalName" value="hardware pin control"/>
       <properties key="uri" value="http://resources/4.0.14/app/DIGITAL_IO/5/vs_digital_io_hwsel"/>
       <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="120" y="70"/>
@@ -738,10 +697,45 @@
     </children>
   </children>
   <children xsi:type="pi:ContainerShape" visible="true" active="true">
-    <properties key="junctionPoint"/>
-    <graphicsAlgorithm xsi:type="al:Ellipse" lineStyle="UNSPECIFIED" width="6" height="6" x="507" y="580">
-      <graphicsAlgorithmChildren xsi:type="al:Ellipse" background="//@colors.3" foreground="//@colors.3" lineWidth="1" transparency="0.0" width="5" height="5"/>
+    <properties key="uri" value="http://resources/4.0.8/app/INTERRUPT/2"/>
+    <properties key="APP_NAME_ID" value="INTERRUPT/2"/>
+    <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="171" height="71" x="550" y="528">
+      <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" lineWidth="2" transparency="0.0" width="131" height="71" x="20" style="//@styles.0/@styles.3" cornerHeight="5" cornerWidth="5"/>
     </graphicsAlgorithm>
+    <anchors xsi:type="pi:BoxRelativeAnchor" visible="true" active="true" incomingConnections="//@connections.2" referencedGraphicsAlgorithm="//@children.8/@graphicsAlgorithm/@graphicsAlgorithmChildren.0">
+      <properties key="SignalName" value="sr_irq"/>
+      <properties key="uri" value="http://resources/4.0.8/app/INTERRUPT/2/vs_nvic_signal_in"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" background="//@colors.2" lineStyle="UNSPECIFIED" width="20" height="10" x="-20" y="50"/>
+    </anchors>
+    <children visible="true">
+      <graphicsAlgorithm xsi:type="al:Polyline" lineStyle="UNSPECIFIED" style="//@styles.0">
+        <points x="20" y="40"/>
+        <points x="151" y="40"/>
+      </graphicsAlgorithm>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true">
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="131" height="20" x="20"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="129" height="20" x="2" style="//@styles.0/@styles.0" horizontalAlignment="ALIGNMENT_CENTER" value="INTERRUPT"/>
+      </children>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true">
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="131" height="20" x="20" y="20"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Text" lineStyle="UNSPECIFIED" width="129" height="20" x="2" style="//@styles.0/@styles.1" horizontalAlignment="ALIGNMENT_CENTER" value="UART_TRANSMIT_IRQ">
+          <properties key="AppInstanceLabel" value="INTERRUPT_0"/>
+        </graphicsAlgorithm>
+      </children>
+    </children>
+    <children visible="true" active="true">
+      <properties key="SignalName" value="sr_irq"/>
+      <properties key="uri" value="http://resources/4.0.8/app/INTERRUPT/2/vs_nvic_signal_in"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="20" height="10" x="-20" y="30"/>
+    </children>
+    <children visible="true">
+      <properties key="uri" value="http://resources/4.0.8/app/INTERRUPT/2/vs_nvic_signal_in"/>
+      <graphicsAlgorithm xsi:type="al:Text" foreground="//@colors.2" lineStyle="UNSPECIFIED" width="96" height="20" x="25" y="45" style="//@styles.0/@styles.2" value="sr_irq"/>
+    </children>
   </children>
   <styles background="//@colors.1" lineWidth="2" lineVisible="true" transparency="0.0" id="COMMON-VALUES" horizontalAlignment="UNSPECIFIED" verticalAlignment="UNSPECIFIED">
     <styles foreground="//@colors.2" lineStyle="UNSPECIFIED" filled="false" id="APP_NAME" font="//@fonts.0"/>
@@ -951,19 +945,6 @@
     <bendpoints x="730" y="508"/>
     <bendpoints x="730" y="432"/>
   </connections>
-  <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="//@children.1/@anchors.1" end="//@children.5/@anchors.0">
-    <properties key="uri" value="http://resources/4.0.8/app/UART_CONFIG/1/http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_standard_rx_event/http://resources/4.0.8/app/INTERRUPT/1/vs_nvic_signal_in"/>
-    <graphicsAlgorithm xsi:type="al:Polyline" background="//@colors.3" foreground="//@colors.3" lineStyle="UNSPECIFIED" style="//@styles.0/@styles.3"/>
-    <connectionDecorators visible="true" locationRelative="true" location="1.0">
-      <graphicsAlgorithm xsi:type="al:Polyline" background="//@colors.3" foreground="//@colors.3" lineStyle="UNSPECIFIED" style="//@styles.0/@styles.3">
-        <points x="-10" y="5"/>
-        <points/>
-        <points x="-10" y="-5"/>
-      </graphicsAlgorithm>
-    </connectionDecorators>
-    <bendpoints x="510" y="469"/>
-    <bendpoints x="510" y="583"/>
-  </connections>
   <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="//@children.2/@anchors.0" end="//@children.1/@anchors.11">
     <properties key="uri" value="http://resources/4.0.14/app/DIGITAL_IO/0/http://resources/4.0.14/app/DIGITAL_IO/0/vs_digital_io_pad_pin/http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_dx0ins"/>
     <graphicsAlgorithm xsi:type="al:Polyline" background="//@colors.3" foreground="//@colors.3" lineStyle="UNSPECIFIED" style="//@styles.0/@styles.3"/>
@@ -977,8 +958,8 @@
     <bendpoints x="200" y="789"/>
     <bendpoints x="200" y="368"/>
   </connections>
-  <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="//@children.1/@anchors.8" end="//@children.5/@anchors.0">
-    <properties key="uri" value="http://resources/4.0.8/app/UART_CONFIG/1/http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_fifo_rx_event/http://resources/4.0.8/app/INTERRUPT/1/vs_nvic_signal_in"/>
+  <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="//@children.1/@anchors.0" end="//@children.8/@anchors.0">
+    <properties key="uri" value="http://resources/4.0.8/app/UART_CONFIG/1/http://resources/4.0.8/app/UART_CONFIG/1/vs_uart_standard_tx_event/http://resources/4.0.8/app/INTERRUPT/2/vs_nvic_signal_in"/>
     <graphicsAlgorithm xsi:type="al:Polyline" background="//@colors.3" foreground="//@colors.3" lineStyle="UNSPECIFIED" style="//@styles.0/@styles.3"/>
     <connectionDecorators visible="true" locationRelative="true" location="1.0">
       <graphicsAlgorithm xsi:type="al:Polyline" background="//@colors.3" foreground="//@colors.3" lineStyle="UNSPECIFIED" style="//@styles.0/@styles.3">
@@ -987,7 +968,7 @@
         <points x="-10" y="-5"/>
       </graphicsAlgorithm>
     </connectionDecorators>
-    <bendpoints x="510" y="608"/>
+    <bendpoints x="510" y="448"/>
     <bendpoints x="510" y="583"/>
   </connections>
   <colors red="227" green="238" blue="249"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Project MotherSystem_Version="" Name="daisyChainMaster4500" Path="C:\Workspaces\DAVE-4.2-64Bit\tower_ws\daisyChainMaster4500">
+<Project MotherSystem_Version="" Name="daisyChainMaster4500" Path="C:\Users\Faebsn\git\daisyChainMaster">
     <COMPILER>
         <Name>ARM_GCC_HOME</Name>
         <Version/>
@@ -32,6 +32,16 @@
                 <Type>C File</Type>
             </Source_File>
             <Source_File>
+                <File_Name>crc_sw.c</File_Name>
+                <Path>\Dave\Generated\CRC_SW\crc_sw.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>crc_sw_conf.c</File_Name>
+                <Path>\Dave\Generated\CRC_SW\crc_sw_conf.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
                 <File_Name>DAVE.c</File_Name>
                 <Path>\Dave\Generated\DAVE.c</Path>
                 <Type>C File</Type>
@@ -54,16 +64,6 @@
             <Source_File>
                 <File_Name>interrupt_conf.c</File_Name>
                 <Path>\Dave\Generated\INTERRUPT\interrupt_conf.c</Path>
-                <Type>C File</Type>
-            </Source_File>
-            <Source_File>
-                <File_Name>systimer.c</File_Name>
-                <Path>\Dave\Generated\SYSTIMER\systimer.c</Path>
-                <Type>C File</Type>
-            </Source_File>
-            <Source_File>
-                <File_Name>systimer_conf.c</File_Name>
-                <Path>\Dave\Generated\SYSTIMER\systimer_conf.c</Path>
                 <Type>C File</Type>
             </Source_File>
             <Source_File>
@@ -154,6 +154,21 @@
                 <Type>H File</Type>
             </Header_File>
             <Header_File>
+                <File_Name>crc_sw.h</File_Name>
+                <Path>\Dave\Generated\CRC_SW\crc_sw.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>crc_sw_conf.h</File_Name>
+                <Path>\Dave\Generated\CRC_SW\crc_sw_conf.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>crc_sw_extern.h</File_Name>
+                <Path>\Dave\Generated\CRC_SW\crc_sw_extern.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
                 <File_Name>DAVE.h</File_Name>
                 <Path>\Dave\Generated\DAVE.h</Path>
                 <Type>H File</Type>
@@ -191,21 +206,6 @@
             <Header_File>
                 <File_Name>interrupt_extern.h</File_Name>
                 <Path>\Dave\Generated\INTERRUPT\interrupt_extern.h</Path>
-                <Type>H File</Type>
-            </Header_File>
-            <Header_File>
-                <File_Name>systimer.h</File_Name>
-                <Path>\Dave\Generated\SYSTIMER\systimer.h</Path>
-                <Type>H File</Type>
-            </Header_File>
-            <Header_File>
-                <File_Name>systimer_conf.h</File_Name>
-                <Path>\Dave\Generated\SYSTIMER\systimer_conf.h</Path>
-                <Type>H File</Type>
-            </Header_File>
-            <Header_File>
-                <File_Name>systimer_extern.h</File_Name>
-                <Path>\Dave\Generated\SYSTIMER\systimer_extern.h</Path>
                 <Type>H File</Type>
             </Header_File>
             <Header_File>
@@ -368,5 +368,6 @@
     <Preprocessor_Symbols>
         <Assembler_Symbol>XMC4500_F100x1024=</Assembler_Symbol>
         <Compiler_Symbol>XMC4500_F100x1024=</Compiler_Symbol>
+        <Compiler_Symbol>DAISY_MASTER_DEVICE=</Compiler_Symbol>
     </Preprocessor_Symbols>
 </Project>

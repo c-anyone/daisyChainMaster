@@ -1,4 +1,8 @@
+package Model.APPS.CRC_SW.v4_0_6.Templates;
 
+import Model.APPS.CRC_SW.v4_0_6.CRC_SW
+
+out.print("""
 /**
  * @cond
  ***********************************************************************************************************************
@@ -33,69 +37,40 @@
  * Change History
  * --------------
  *
- * 2014-06-16:
+ * 2015-02-16:
  *     - Initial version<br>
+ *
  * @endcond
  *
  */
 
-#ifndef _DAVE_H_
-#define _DAVE_H_
+
+#ifndef CRC_SW_CONF_H
+#define CRC_SW_CONF_H
 
 /***********************************************************************************************************************
  * HEADER FILES
  **********************************************************************************************************************/
 
-/** #include DAVE APP Header files. */
-#include "xmc_common.h"  
-
-#include "CLOCK_XMC4/clock_xmc4.h"
-  
-
-#include "UART_CONFIG/uart_config.h"
-  
-
-#include "DIGITAL_IO/digital_io.h"
-  
-
-#include "CPU_CTRL_XMC4/cpu_ctrl_xmc4.h"
-  
-
-#include "USBD/usbd.h"
-  
-
-#include "USBD_VCOM/usbd_vcom.h"
-  
-
-#include "CRC_SW/crc_sw.h"
-  
-
-#include "INTERRUPT/interrupt.h"
-  
-	
-
 /**********************************************************************************************************************
- * ENUMS
+ * MACROS
  **********************************************************************************************************************/
-typedef enum DAVE_STATUS
+""");
+
+String appInst  = null;
+
+for (Object appIns : appInstancesList )
 {
-  DAVE_STATUS_SUCCESS = 0,
-  DAVE_STATUS_FAILURE,
-  DAVE_STATUS_ALREADY_INITIALIZED
-} DAVE_STATUS_t;
+	appInst = appIns.getInstanceLabel()
+	
+} // end of for loop
 
-/***********************************************************************************************************************
-* API PROTOTYPES
-***********************************************************************************************************************/
-#ifdef __cplusplus
-extern "C" {
-#endif
+out.print("""
+#define CRC_SW_MAJOR_VERSION (${(CRC_SW.version).findAll( /\d+/ )*.toInteger()[0]}U)
+#define CRC_SW_MINOR_VERSION (${(CRC_SW.version).findAll( /\d+/ )*.toInteger()[1]}U)
+#define CRC_SW_PATCH_VERSION (${(CRC_SW.version).findAll( /\d+/ )*.toInteger()[2]}U)
+""");
 
-DAVE_STATUS_t DAVE_Init(void);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif  /** ifndef _DAVE_H_ */
-
+out.print("""
+#endif  /* ifndef CRC_SW_CONF_H */
+""");
